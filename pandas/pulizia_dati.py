@@ -45,3 +45,4 @@ df_lavori['thumbnailCopyright']=df_lavori['thumbnailCopyright'].astype(str)
 df_lavori['thumbnailUrl']=df_lavori['thumbnailUrl'].astype(str)
 df_lavori['url']=df_lavori['url'].astype(str)
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori.csv', index=False)
+
