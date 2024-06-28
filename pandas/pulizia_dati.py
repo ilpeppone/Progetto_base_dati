@@ -54,3 +54,7 @@ df_lavori['thumbnailUrl']=df_lavori['thumbnailUrl'].astype(str)
 df_lavori['url']=df_lavori['url'].astype(str)
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori.csv', index=False)
 
+<<<<<<< HEAD
+=======
+data = pd.read_csv("/home/plato/Progetto_base_dati/pandas/artist_data.csv", index_col=0)
+>>>>>>> d1f74f66a7f4ad92291f0ad85c320d066e1547c9
