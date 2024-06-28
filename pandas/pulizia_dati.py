@@ -13,8 +13,16 @@ df_artisti['placeOfBirth'] = df_artisti['placeOfBirth'].astype(str)
 df_artisti['placeOfDeath'] = df_artisti['placeOfDeath'].astype(str)
 df_artisti['url'] = df_artisti['url'].astype(str)
 
-print(df_artisti.dtypes)#verifichiamo come vengono interpretati i dati nel dataframe
+print(df_artisti.dtypes)#verifichiamo se interpretati i dati nel dataframe come ci aspettiamo
 print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono
+
+# rimuoviamo eventuali ridondaze fra tuple
+df_artisti = df_artisti.drop_duplicates()
+
+
+
+print(df_artisti.shape)
+
 df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti.csv', index=False)
 #########
 
