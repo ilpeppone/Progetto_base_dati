@@ -7,7 +7,7 @@ df_artisti['id'] = df_artisti['id'].astype('Int64')
 df_artisti['name'] = df_artisti['name'].astype(str)
 df_artisti['gender'] = df_artisti['gender'].astype(str)
 df_artisti['dates'] = df_artisti['dates'].astype(str)
-df_artisti['yearOfBirth'] = df_artisti['yearOfBirth'].fillna(pd.NA).astype(pd.Int64Dtype())
+df_artisti['yearOfBirth'] = df_artisti['yearOfBirth'].fillna(pd.NA).astype(pd.Int64Dtype())#convertiamo anno di nastita a tipo intero, nel caso non ci sia un valore lo riempiamo con il metodo fillna(pd.NA) per indircare appunto un valore nullo
 df_artisti['yearOfDeath'] = df_artisti['yearOfDeath'].fillna(pd.NA).astype(pd.Int64Dtype())
 df_artisti['placeOfBirth'] = df_artisti['placeOfBirth'].astype(str)
 df_artisti['placeOfDeath'] = df_artisti['placeOfDeath'].astype(str)
@@ -19,15 +19,13 @@ print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono
 # rimuoviamo eventuali ridondaze fra tuple
 df_artisti = df_artisti.drop_duplicates()
 
-
-
-print(df_artisti.shape)
+print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono dopo aver eliminato duplicati
 
 df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti.csv', index=False)
 #########
 
 df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv")
-print(df_lavori.dtypes)
+
 df_lavori ['id']=df_lavori['id'].astype('Int64')
 df_lavori['accession_number']=df_lavori['accession_number'].astype(str)
 df_lavori['artist']=df_lavori['artist'].astype(str)
@@ -52,5 +50,8 @@ df_lavori['inscription']=df_lavori['inscription'].astype(str)
 df_lavori['thumbnailCopyright']=df_lavori['thumbnailCopyright'].astype(str)
 df_lavori['thumbnailUrl']=df_lavori['thumbnailUrl'].astype(str)
 df_lavori['url']=df_lavori['url'].astype(str)
+
+print(df_lavori.dtypes)
+print(df_lavori.shape)
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori.csv', index=False)
 
