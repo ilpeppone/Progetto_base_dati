@@ -1,9 +1,10 @@
 import pandas as pd
 
-# Creazione del dataframe df_artisti importando il CSV artisti
+#importiamo il CSV senza indicizzare perché potrebbero esserci duplicati
+# tra tutti gli attributi, che verranno eventualmente rimossi con il metodo drop_duplicates
 df_artisti = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artist_data.csv")
 
-# Conversione delle colonne nell'ordine corretto, nel tipo di dato appropriato, e riempimento dei valori mancanti
+#conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
 df_artisti['id'] = pd.to_numeric(df_artisti['id'], downcast='integer')
 df_artisti['name'] = df_artisti['name'].fillna('Missing').astype(str)
 df_artisti['gender'] = df_artisti['gender'].fillna('Missing').astype(str)
@@ -17,19 +18,19 @@ df_artisti['url'] = df_artisti['url'].fillna('Missing').astype(str)
 print(df_artisti.dtypes)#verifichiamo se interpretati i dati nel dataframe come ci aspettiamo
 print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono
 
-# rimuoviamo eventuali ridondaze fra tuple
-df_artisti = df_artisti.drop_duplicates()
+df_artisti = df_artisti.drop_duplicates()# rimuoviamo eventuali ridondaze fra tuple
 
 print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono dopo aver eliminato duplicati
 
-df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False)
+df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False)#esportiamo senza indicizzare
+
 #########
 
-# Creazione del dataframe df_lavori importando il CSV artwork_data
-df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv")
+# creiamo il dataframe df_lavori importando il CSV artwork_data
+df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv", index_col='id')
 
-# Conversione delle colonne nel tipo di dato appropriato e riempimento dei valori mancanti
-df_lavori['id'] = pd.to_numeric(df_lavori['id'], downcast='integer')
+#conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
+df_lavori['id'] = pd.to_numeric(df_lavori['id'], downcast='integer') 
 df_lavori['accession_number'] = df_lavori['accession_number'].fillna('Missing').astype(str)
 df_lavori['artist'] = df_lavori['artist'].fillna('Missing').astype(str)
 df_lavori['artistRole'] = df_lavori['artistRole'].fillna('Missing').astype(str)
@@ -50,9 +51,11 @@ df_lavori['thumbnailCopyright'] = df_lavori['thumbnailCopyright'].fillna('Missin
 df_lavori['thumbnailUrl'] = df_lavori['thumbnailUrl'].fillna('Missing').astype(str)
 df_lavori['url'] = df_lavori['url'].fillna('Missing').astype(str)
 
-df_artisti=df_lavori.drop_duplicates()
+print(df_lavori.shape)#verifichiamo quanti valori ci sono
 
-print(df_lavori.dtypes)
-print(df_lavori.shape)
+df_artisti=df_lavori.drop_duplicates() #eliminazione di eventuali righe duplicate
+
+print(df_lavori.dtypes)#visualizziamo se i dati sono stati convertiti nel tipo che abbiamo indicato
+print(df_lavori.shape)#verifichiamo quanti valori ci sono dopo aver eliminato i duplicati
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori_puliti.csv', index=False)
 
