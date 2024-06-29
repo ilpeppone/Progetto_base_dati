@@ -27,7 +27,7 @@ df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=Fal
 #########
 
 # creiamo il dataframe df_lavori importando il CSV artwork_data
-df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv", index_col='id')
+df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv")
 
 #conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
 df_lavori['id'] = pd.to_numeric(df_lavori['id'], downcast='integer') 
