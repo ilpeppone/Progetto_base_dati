@@ -5,11 +5,11 @@ import pandas as pd
 df_artisti = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artist_data.csv")
 
 #conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
-df_artisti['id'] = pd.to_numeric(df_artisti['id'], downcast='integer')
+df_artisti['id'] = pd.to_numeric(df_artisti['id'], errors='coerce').astype(pd.UInt16Dtype()) #Uint16 perchè i valori possano assumere da 0 fino a 65,535
 df_artisti['name'] = df_artisti['name'].astype(str)
 df_artisti['gender'] = df_artisti['gender'].astype(str)
-#dates tolte perchè derivate
-df_artisti['yearOfBirth'] = pd.to_numeric(df_artisti['yearOfBirth'], errors='coerce').astype(pd.UInt16Dtype()) #Uint16 perchè i valori possano assumere da 0 fino a 65,535
+df_artisti=df_artisti.drop(columns=['dates'])#dates tolte perchè derivate
+df_artisti['yearOfBirth'] = pd.to_numeric(df_artisti['yearOfBirth'], errors='coerce').astype(pd.UInt16Dtype()) 
 df_artisti['yearOfDeath'] = pd.to_numeric(df_artisti['yearOfDeath'], errors='coerce').astype(pd.UInt16Dtype())
 df_artisti['placeOfBirth'] = df_artisti['placeOfBirth'].astype(str)
 df_artisti['placeOfDeath'] = df_artisti['placeOfDeath'].astype(str)
@@ -30,11 +30,11 @@ df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=Fal
 df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv")
 
 #conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
-df_lavori['id'] = pd.to_numeric(df_lavori['id'], downcast='integer') 
+df_lavori['id'] = pd.to_numeric(df_lavori['id'],  errors='coerce').astype(pd.Int64Dtype())
 df_lavori['accession_number'] = df_lavori['accession_number'].astype(str)
-#artist lo tolgo perchè già presente nel csv degli artisti
+df_lavori= df_lavori.drop(columns=['artist'])#artist lo tolgo perchè il nome è già presente nel csv degli artisti
 df_lavori['artistRole'] = df_lavori['artistRole'].astype(str)
-df_lavori['artistId'] = pd.to_numeric(df_lavori['artistId'], downcast='integer', errors='coerce').astype(pd.Int16Dtype())
+df_lavori['artistId'] = pd.to_numeric(df_lavori['artistId'],  errors='coerce').astype(pd.Int16Dtype())
 df_lavori['title'] = df_lavori['title'].astype(str)
 df_lavori['dateText'] = df_lavori['dateText'].astype(str)#lo lascio perchè da informazioni in più
 df_lavori['medium'] = df_lavori['medium'].astype(str)
@@ -42,20 +42,18 @@ df_lavori['creditLine'] = df_lavori['creditLine'].astype(str)
 df_lavori['year'] = pd.to_numeric(df_lavori['year'], errors='coerce').astype(pd.Int16Dtype())
 df_lavori['acquisitionYear'] = pd.to_numeric(df_lavori['acquisitionYear'], errors='coerce').astype(pd.Int16Dtype())
 df_lavori['dimensions'] = df_lavori['dimensions'].astype(str)
-df_lavori['width'] = pd.to_numeric(df_lavori['width'], errors='coerce').astype(pd.Float32Dtype())
-df_lavori['height'] = pd.to_numeric(df_lavori['height'], errors='coerce').astype(pd.Float32Dtype())
-df_lavori['depth'] = pd.to_numeric(df_lavori['depth'], errors='coerce').astype(pd.Float32Dtype())
-#unità eliminate perchè la specificate nel campo dimensions
+df_lavori = df_lavori.drop(columns=['width', 'height', 'depth','units'])#width,height,depth sono derivati da dimensions
+#units lo tolgo perchè già presente nel csv degli artisti
 df_lavori['inscription'] = df_lavori['inscription'].astype(str)
 df_lavori['thumbnailCopyright'] = df_lavori['thumbnailCopyright'].astype(str)
 df_lavori['thumbnailUrl'] = df_lavori['thumbnailUrl'].astype(str)
 df_lavori['url'] = df_lavori['url'].astype(str)
 
-print(df_lavori.shape)#verifichiamo quanti valori ci sono
-
-df_artisti=df_lavori.drop_duplicates() #eliminazione di eventuali righe duplicate
-
 print(df_lavori.dtypes)#visualizziamo se i dati sono stati convertiti nel tipo che abbiamo indicato
+
+print(df_lavori.shape)#verifichiamo quanti valori ci sono
+df_artisti=df_lavori.drop_duplicates() #eliminazione di eventuali righe duplicate
 print(df_lavori.shape)#verifichiamo quanti valori ci sono dopo aver eliminato i duplicati
+
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori_puliti.csv', index=False)#esportiamo senza indicizzare
 
