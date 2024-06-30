@@ -5,7 +5,7 @@ import pandas as pd
 df_artisti = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artist_data.csv")
 
 #conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
-df_artisti['id'] = pd.to_numeric(df_artisti['id'], errors='coerce').astype(pd.Int32Dtype()) #Uint16 perchè i valori possano assumere da 0 fino a 65,535
+df_artisti['id'] = pd.to_numeric(df_artisti['id'], errors='coerce').astype(pd.Int32Dtype()) 
 df_artisti['name'] = df_artisti['name'].astype(str)
 df_artisti['gender'] = df_artisti['gender'].astype(str)
 df_artisti=df_artisti.drop(columns=['dates'])#dates tolte perchè derivate
@@ -21,9 +21,11 @@ print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono
 df_artisti = df_artisti.drop_duplicates()# rimuoviamo eventuali ridondaze fra tuple
 
 print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono dopo aver eliminato duplicati
-
-df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False)#esportiamo senza indicizzare
-
+max_lengths = df_artisti.apply(lambda col: col.astype(str).str.len().max())
+print(max_lengths)#verifico la dimensione massima di ogni colonna degli artisi per stringa
+df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False, na_rep='NULL')#esportiamo senza indicizzare
+#con na_rep='NULL' riempiamo tutti i valori VUOTI (pd.NA) con NULL come ad esempio le date
+#le stringhe invece vengo automaticamente riempite con nan se ci sono valori vuoti
 #########
 
 # creiamo il dataframe df_lavori importando il CSV artwork_data
@@ -36,7 +38,7 @@ df_lavori= df_lavori.drop(columns=['artist'])#artist lo tolgo perchè il nome è
 df_lavori['artistRole'] = df_lavori['artistRole'].astype(str)
 df_lavori['artistId'] = pd.to_numeric(df_lavori['artistId'],  errors='coerce').astype(pd.Int32Dtype())
 df_lavori['title'] = df_lavori['title'].astype(str)
-df_lavori['dateText'] = df_lavori['dateText'].astype(str)#lo lascio perchè da informazioni in più
+df_lavori['dateText'] = df_lavori['dateText'].astype(str)#lo lascio perchè ci sono informazioni aggiuntive
 df_lavori['medium'] = df_lavori['medium'].astype(str)
 df_lavori['creditLine'] = df_lavori['creditLine'].astype(str)
 df_lavori['year'] = pd.to_numeric(df_lavori['year'], errors='coerce').astype(pd.Int32Dtype())
@@ -54,6 +56,10 @@ print(df_lavori.dtypes)#visualizziamo se i dati sono stati convertiti nel tipo c
 print(df_lavori.shape)#verifichiamo quanti valori ci sono
 df_artisti=df_lavori.drop_duplicates() #eliminazione di eventuali righe duplicate
 print(df_lavori.shape)#verifichiamo quanti valori ci sono dopo aver eliminato i duplicati
-
-df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori_puliti.csv', index=False)#esportiamo senza indicizzare
-
+# Calcola la lunghezza massima dei valori in ciascuna colonna
+max_lengths = df_lavori.apply(lambda col: col.astype(str).str.len().max())
+#verifico la dimensione massima di ogni colonna delle opere per stringa
+print(max_lengths)
+df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori_puliti.csv', index=False, na_rep='NULL')#esportiamo senza indicizzare
+#con na_rep='NULL' riempiamo tutti i valori VUOTI (pd.NA) con NULL come ad esempio le date
+#le stringhe invece vengo automaticamente riempite con nan se ci sono valori vuoti
