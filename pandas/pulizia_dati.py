@@ -22,7 +22,7 @@ df_artisti = df_artisti.drop_duplicates()# rimuoviamo eventuali ridondaze fra tu
 
 print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono dopo aver eliminato duplicati
 max_lengths = df_artisti.apply(lambda col: col.astype(str).str.len().max())
-print(max_lengths)#verifico la dimensione massima di ogni colonna degli artisi per stringa
+print(max_lengths)#verifico la dimensione massima di ogni colonna degli artisti per stringa
 df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False, na_rep='NULL')#esportiamo senza indicizzare
 #con na_rep='NULL' riempiamo tutti i valori VUOTI (pd.NA) con NULL come ad esempio le date
 #le stringhe invece vengo automaticamente riempite con nan se ci sono valori vuoti
