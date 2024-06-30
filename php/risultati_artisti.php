@@ -77,8 +77,7 @@
 
         // Esegui la query
         $result = $conn->query($sql);
-        // Dopo la costruzione della query
-        echo "Query SQL: " . $sql . "<br>";
+        // debug query echo "Query SQL: " . $sql . "<br>";
         if ($result === false) {
             echo "Errore nella query: " . $conn->error;
         } elseif ($result->num_rows > 0) {
