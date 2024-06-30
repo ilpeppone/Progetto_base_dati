@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Ricerca Opere</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ricerca Opere</h1>
+    <form action="risultati_opere.php" method="get">
+        <label>Titolo:</label>
+        <input type="text" name="titolo">
+
+        <label>Data:</label>
+        <input type="text" name="dataTesto">
+
+        <label>Media:</label>
+        <input type="text" name="media">
+
+        <label>Anno:</label>
+        <input type="number" name="anno">
+
+        <label>Anno di Acquisizione:</label>
+        <input type="number" name="anno_acquisizione">
+
+        <label>Dimensioni:</label>
+        <input type="text" name="dimensioni">
+
+        <label>Crediti:</label>
+        <input type="text" name="crediti">
+
+        <label>Indirizzo URL:</label>
+        <input type="text" name="indirizzo_url">
+
+        <label>Thumbnail URL:</label>
+        <input type="text" name="thumbnailUrl">
+
+        <label>Thumbnail Copyright:</label>
+        <input type="text" name="thumbnailCopyright">
+
+        <label>Accession Number:</label>
+        <input type="text" name="accession_number">
+
+        <label>ID Artista:</label>
+        <input type="number" name="id_artista">
+
+        <label>Ruolo Artista:</label>
+        <input type="text" name="ruoloartista">
+
+        <button type="submit">Cerca</button>
+    </form>
+</body>
+</html>
