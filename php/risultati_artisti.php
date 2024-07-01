@@ -1,28 +1,16 @@
 <?php
         include_once 'connessione.php'; //includiamo il php per la connessione al database 
         // recuperiamo i parametri
-        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $id = isset($_POST['id']) && $_POST['id'] ? $_POST['id'] : null;
         $nome = isset($_POST['nome']) ? $conn->real_escape_string($_POST['nome']) : '';
         $genere = isset($_POST['genere']) ? $conn->real_escape_string($_POST['genere']) : '';
         $luogo_nascita = isset($_POST['luogo_nascita']) ? $conn->real_escape_string($_POST['luogo_nascita']) : '';
         $luogo_morte = isset($_POST['luogo_morte']) ? $conn->real_escape_string($_POST['luogo_morte']) : '';
-        $anno_nascita = isset($_POST['anno_nascita']) ? $_POST['anno_nascita'] : null;
-        $anno_morte = isset($_POST['anno_morte']) ? $_POST['anno_morte'] : null;
+        $anno_nascita = isset($_POST['anno_nascita']) && $_POST['anno_nascita']? $_POST['anno_nascita'] : null;
+        $anno_morte = isset($_POST['anno_morte']) && $_POST['anno_morte']  ? $_POST['anno_morte'] : null;
         $indirizzo_url = isset($_POST['indirizzo_url']) ? $conn->real_escape_string($_POST['indirizzo_url']) : '';
-        // costruzione della query 
-        $sql = "SELECT * FROM ARTISTI WHERE 1=1";
-        // verifichiamo se le variabili sono nulle 
-        if ($id === null &&
-            $nome === '' &&
-            $genere === '' &&
-            $luogo_nascita === '' &&
-            $luogo_morte === '' &&
-            $anno_nascita === null &&
-            $anno_morte === null &&
-            $indirizzo_url === '') {
-            //se lo sono restituiamo tutte le colonne
-            $sql = "SELECT * FROM ARTISTI";
-        } else {
+            // costruzione della query 
+            $sql = "SELECT * FROM ARTISTI WHERE 1=1";
             // se invece abbiamo specificato dei parametri procediamo ad aggiungere condizioni alla query
             if ($id !== null) {
                 $sql .= " AND id = $id";
@@ -48,9 +36,11 @@
             if ($indirizzo_url !== '') {
                 $sql .= " AND indirizzo_url LIKE '%$indirizzo_url%'";
             }
-        }
         //eseguiamo la query
         $risultato = $conn->query($sql);
+        if ($risultato === false) {
+            echo "Errore nella query: " . $conn->error;
+        } elseif ($risultato->num_rows > 0) {
         // debug query echo "Query SQL: " . $sql . "<br>";
             echo "<h2>Risultati della ricerca:</h2>";
             echo "<table>";
@@ -68,6 +58,9 @@
                 echo "</tr>";
             }
             echo "</table>";
+        } else {
+            echo "<p>Nessun risultato trovato.</p>";
+        }
         //chiudiamo la connessione al database
         $conn->close();
         ?>

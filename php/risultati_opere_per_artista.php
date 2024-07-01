@@ -19,10 +19,11 @@
         } elseif ($risultato_opere->num_rows > 0) {
             echo "<h2>Opere di $nome_artista:</h2>";
             echo "<table>";
-            echo "<tr><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Ruolo Artista</th><th>Indirizzo URL</th></tr>";
+            echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Ruolo Artista</th><th>Indirizzo URL</th></tr>";
             // fetch_assoc() estrae ogni riga dei risultati della query come un array associativo, che può poi essere utilizzato per visualizzare i dati
             while ($riga = $risultato_opere->fetch_assoc()) {
                 echo "<tr>";
+                echo "<td>" . $riga['id'] . "</td>";
                 echo "<td>" . $riga['titolo'] . "</td>";
                 echo "<td>" . $riga['dataTesto'] . "</td>";
                 echo "<td>" . $riga['media'] . "</td>";

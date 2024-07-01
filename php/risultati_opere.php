@@ -1,6 +1,7 @@
 <?php
     include_once 'connessione.php'; // include il php per la connessione
     // recupero dei parametri di ricerca
+    $id = isset($_POST['id']) && $_POST['id'] ? $_POST['id'] : null;
     $titolo = isset($_POST['titolo']) ? $conn->real_escape_string($_POST['titolo']) : '';
     $dataTesto = isset($_POST['dataTesto']) ? $conn->real_escape_string($_POST['dataTesto']) : '';
     $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
@@ -16,6 +17,9 @@
     $ruoloartista = isset($_POST['ruoloartista']) ? $conn->real_escape_string($_POST['ruoloartista']) : '';
     // costruzione della query 
     $sql = "SELECT * FROM OPERE WHERE 1=1";
+    if ($id !== null) {
+        $sql .= " AND id = $id";
+    }
     if ($titolo !== '') {
         $sql .= " AND titolo LIKE '%$titolo%'";
     }
@@ -62,9 +66,10 @@
     } elseif ($risultato->num_rows > 0) {
         echo "<h2>Risultati della ricerca:</h2>";
         echo "<table>";
-        echo "<tr><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
+        echo "<tr><th>ID</th<th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
         while ($riga = $risultato->fetch_assoc()) {
             echo "<tr>";
+            echo "<td>" . $riga['id'] . "</td>";
             echo "<td>" . $riga['titolo'] . "</td>";
             echo "<td>" . $riga['dataTesto'] . "</td>";
             echo "<td>" . $riga['media'] . "</td>";
