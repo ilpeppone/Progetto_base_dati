@@ -2,6 +2,8 @@
         include_once 'connessione.php'; //includiamo il php per la connessione al database 
         // recuperiamo i parametri
         $id = isset($_POST['id']) && $_POST['id'] ? $_POST['id'] : null;
+        // isset($_POST['id']) verifica se $_POST['id'] è impostato, cioè se esiste e non è null.
+        // $_POST['id'] è valutato come vero se il suo valore non è vuoto, null o zero.
         $nome = isset($_POST['nome']) ? $conn->real_escape_string($_POST['nome']) : '';
         $genere = isset($_POST['genere']) ? $conn->real_escape_string($_POST['genere']) : '';
         $luogo_nascita = isset($_POST['luogo_nascita']) ? $conn->real_escape_string($_POST['luogo_nascita']) : '';
