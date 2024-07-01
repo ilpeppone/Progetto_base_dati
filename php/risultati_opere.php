@@ -68,7 +68,7 @@
     } elseif ($risultato->num_rows > 0) {
         echo "<h2>Risultati della ricerca:</h2>";
         echo "<table>";
-        echo "<tr><th>ID</th<th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
+        echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
         while ($riga = $risultato->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $riga['id'] . "</td>";
