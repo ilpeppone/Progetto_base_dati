@@ -24,7 +24,7 @@
         } elseif ($result_opere->num_rows > 0) {
             echo "<h2>Opere di $nome_artista:</h2>";
             echo "<table>";
-            echo "<tr><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th></tr>";
+            echo "<tr><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Ruolo Artista</th><th>Indirizzo URL</th></tr>";
 
             while ($row = $result_opere->fetch_assoc()) {
                 echo "<tr>";
@@ -33,6 +33,13 @@
                 echo "<td>" . $row['media'] . "</td>";
                 echo "<td>" . $row['anno'] . "</td>";
                 echo "<td>" . $row['anno_acquisizione'] . "</td>";
+                echo "<td>" . $row['dimensioni'] . "</td>";
+                echo "<td>" . $row['inscription'] . "</td>";
+                echo "<td>" . $row['thumbnailCopyright'] . "</td>";
+                echo "<td><a href='" . $row['thumbnailUrl'] . "'>" . $row['thumbnailUrl'] . "</a></td>";
+                echo "<td>" . $row['accession_number'] . "</td>";
+                echo "<td>" . $row['ruoloartista'] . "</td>";
+                echo "<td><a href='" . $row['indirizzo_url'] . "'>" . $row['indirizzo_url'] . "</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -44,6 +51,7 @@
     // Chiudi la connessione al database
     $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -61,8 +69,8 @@
             location.href = page;
         }
     </script>
-    </head>
-    <body>
-        <button type="button" onclick="redirectTo('index.html')">Pagina iniziale</button>
-    </body>
+</head>
+<body>
+    <button type="button" onclick="redirectTo('index.html')">Pagina iniziale</button>
+</body>
 </html>

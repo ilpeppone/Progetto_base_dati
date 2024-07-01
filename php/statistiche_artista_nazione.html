@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Statistiche artisti per nazione</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Numero di artisti nati e/o morti in una determinata nazione</h1>
+    <form action="statistiche.php" method="post">
+        <label for="nazione">Nazione:</label>
+        <input type="text" id="nazione" name="nazione" required>
+        <input type="hidden" name="statistica" value="artisti_nazione">
+        <button type="submit">Calcola</button>
+    </form>
+</body>
+</html>

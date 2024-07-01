@@ -33,7 +33,6 @@
                     $placeOfBirth = $conn->real_escape_string($data[5]);
                     $placeOfDeath = $conn->real_escape_string($data[6]);
                     $url = $conn->real_escape_string($data[7]);
-
                     // Query di inserimento degli artisti
                     $sql = "INSERT INTO ARTISTI (id, nome, genere, anno_nascita, anno_morte, luogo_nascita, luogo_morte, indirizzo_url) 
                             VALUES ($id, '$name', '$gender', $yearOfBirth, $yearOfDeath, '$placeOfBirth', '$placeOfDeath', '$url')";

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Statistiche opere e artisti</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            max-width: 1200px;
+        }
+    </style>
+    <script>
+        function redirectTo(page) {
+            location.href = page;
+        }
+    </script>
+</head>
+<body>
+    <h1>Statistiche opere e artisti</h1>
+    <button type="button" onclick="redirectTo('statistiche_opere_anno.html')">Numero di opere realizzate in un determinato anno</button>
+    <button type="button" onclick="redirectTo('statistiche_artisti_nazione.html')">Numero di artisti nati e/o morti in una determinata nazione</button>
+    <button type="button" onclick="redirectTo('statistiche_opere_artista.html')">Numero di opere per artista</button>
+    <button type="button" onclick="redirectTo('statistiche_opere_media.html')">Numero di opere per media</button>
+    <button type="button" onclick="redirectTo('statistiche_opere_acquisizioni.html')">Numero di opere da anno ad anno</button>
+</body>
+</html>
