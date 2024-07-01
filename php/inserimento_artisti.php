@@ -28,8 +28,8 @@
                     $id = $data[0];
                     $name = $conn->real_escape_string($data[1]); // se un ' apostrofo ' è presente nella stringa, viene trasformato in \' prima di essere utilizzato in una query SQL
                     $gender = $conn->real_escape_string($data[2]);
-                    $yearOfBirth = $data[3];
-                    $yearOfDeath = $data[4];
+                    $yearOfBirth =  $data[3];
+                    $yearOfDeath =  $data[4];
                     $placeOfBirth = $conn->real_escape_string($data[5]);
                     $placeOfDeath = $conn->real_escape_string($data[6]);
                     $url = $conn->real_escape_string($data[7]);
