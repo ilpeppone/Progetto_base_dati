@@ -1,6 +1,5 @@
 import pandas as pd
-#importiamo il CSV senza indicizzare perché potrebbero esserci duplicati
-# tra tutti gli attributi, che verranno eventualmente rimossi con il metodo drop_duplicates
+#importiamo il CSV 
 df_artisti = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artist_data.csv")
 
 #conversione delle colonne nell'ordine corretto, riempimento dei valori mancanti e nel tipo di dato appropriato 
@@ -23,10 +22,7 @@ print(df_artisti.shape)#verifichiamo quante tuple e attributi ci sono dopo aver 
 max_lengths = df_artisti.apply(lambda col: col.astype(str).str.len().max())
 print(max_lengths)#verifico la dimensione massima di ogni colonna degli artisti per stringa
 df_artisti.to_csv('/home/peppe/Progetto_base_dati/artisti_puliti.csv', index=False)#esportiamo senza indicizzare
-#con na_rep='NULL' riempiamo tutti i valori VUOTI (pd.NA) con NULL come ad esempio le date
-#le stringhe invece vengo automaticamente riempite con nan se ci sono valori vuoti
 #########
-
 # creiamo il dataframe df_lavori importando il CSV artwork_data
 df_lavori = pd.read_csv("/home/peppe/Progetto_base_dati/pandas/artwork_data.csv")
 
@@ -60,5 +56,4 @@ max_lengths = df_lavori.apply(lambda col: col.astype(str).str.len().max())
 #verifico la dimensione massima di ogni colonna delle opere per stringa
 print(max_lengths)
 df_lavori.to_csv('/home/peppe/Progetto_base_dati/lavori_puliti.csv', index=False)#esportiamo senza indicizzare
-#con na_rep='NULL' riempiamo tutti i valori VUOTI (pd.NA) con NULL come ad esempio le date
-#le stringhe invece vengo automaticamente riempite con nan se ci sono valori vuoti
+

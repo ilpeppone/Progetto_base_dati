@@ -13,19 +13,17 @@
 <body>
     <?php
         include_once 'connessione.php';
-        // Percorso del file CSV dei lavori
-        $csv_file_lavori = "/home/peppe/Progetto_base_dati/lavori_puliti.csv"; // Inserisci il percorso corretto del tuo file CSV
-
-        // disabilito il controllo delle chiavi esterne
+        // percorso del file CSV dei lavori
+        $csv_file_lavori = "/home/peppe/Progetto_base_dati/lavori_puliti.csv"; 
+        // disabilitiamo il controllo delle chiavi esterne
         $conn->query("SET FOREIGN_KEY_CHECKS = 0");
-
-        // Apre il file CSV dei lavori
+        // apriamo il file CSV dei lavori
         if (($handle = fopen($csv_file_lavori, "r")) !== FALSE) {
-            fgetcsv($handle); // legge e scarta la prima riga (header)
-            // Itera sulle righe del file CSV
+            fgetcsv($handle); // leggiamo e scartiamo la prima riga (header)
+            // iteriamo sulle righe del file CSV
             while (($data = fgetcsv($handle)) !== FALSE) {
                 $id = $data[0];
-                $accession_number = $conn->real_escape_string($data[1]);
+                $accession_number = $conn->real_escape_string($data[1]);//usiamo real_escape_string per gestire i caratteri speciali
                 $artistRole = $conn->real_escape_string($data[2]);
                 $artistId = is_numeric($data[3]) ? $data[3] : 'NULL';
                 $title = $conn->real_escape_string($data[4]);
@@ -39,8 +37,7 @@
                 $thumbnailCopyright = $conn->real_escape_string($data[12]);
                 $thumbnailUrl = $conn->real_escape_string($data[13]);
                 $url = $conn->real_escape_string($data[14]);
-
-                // Gestisci valori NULL per le stringhe
+                // gestiamo i valori NULL per le stringhe
                 $accession_number = empty($accession_number) ? 'NULL' : "'$accession_number'";
                 $artistRole = empty($artistRole) ? 'NULL' : "'$artistRole'";
                 $title = empty($title) ? 'NULL' : "'$title'";
@@ -52,29 +49,24 @@
                 $thumbnailCopyright = empty($thumbnailCopyright) ? 'NULL' : "'$thumbnailCopyright'";
                 $thumbnailUrl = empty($thumbnailUrl) ? 'NULL' : "'$thumbnailUrl'";
                 $url = empty($url) ? 'NULL' : "'$url'";
-
-                // Query di inserimento dei lavori
+                // scriviamo la query per inserire i valori
                 $sql = "INSERT INTO OPERE (id, accession_number, ruoloartista, id_artista, titolo, dataTesto, media, crediti, anno, anno_acquisizione, dimensioni, inscription, thumbnailCopyright, thumbnailUrl, indirizzo_url) 
                         VALUES ($id, $accession_number, $artistRole, $artistId, $title, $dateText, $medium, $creditLine, $year, $acquisitionYear, $dimensions, $inscription, $thumbnailCopyright, $thumbnailUrl, $url)";
-
-                // Esegui la query di inserimento
+                //eseguiamo l'inserimento con la query
                 if ($conn->query($sql) === TRUE) {
                     echo "Record dei lavori inserito con successo<br>";
                 } else {
                     echo "Errore nell'inserimento del record dei lavori: " . $conn->error . "<br>";
                 }
             }
-
-            // Chiudi il file CSV dei lavori
+            // chiudiamo il file CSV dei lavori
             fclose($handle);
         } else {
             echo "Errore nell'apertura del file CSV dei lavori";
         }
-
-        // riabilitazione del controllo delle chiavi esterne
+        // riabilitiamo il controllo delle chiavi esterne
         $conn->query("SET FOREIGN_KEY_CHECKS = 1");
-
-        // Chiudi la connessione al database
+        // chiudiamo la connessione al database
         $conn->close();
     ?>
 </body>

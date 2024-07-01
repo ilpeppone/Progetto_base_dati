@@ -1,16 +1,10 @@
 <?php
-// Configurazione del database
-$servername = "localhost";
-$username = "peppe"; 
-$password = "panecotto07@"; 
-$dbname = "Musei_Tate"; 
-
 // Connessione al database
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("localhost", "peppe", "panecotto07@", "Musei_Tate");
 
 // Verifica la connessione
 if ($conn->connect_error) {
-    die("Connessione fallita: " . $conn->connect_error);
+    echo "Connessione fallita: " . $conn->connect_error;
+    exit;
 } 
-
 ?>

@@ -4,10 +4,15 @@
     <meta charset="utf-8">
     <title>Statistiche Opere per Media</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            max-width: 1200px;
+        }
+    </style>
 </head>
 <body>
     <h1>Statistiche Opere per Media</h1>
-    <form action="statistiche.php" method="post">
+    <form action="statistiche.php" method="POST">
         <input type="hidden" name="statistica" value="opere_media">
         <label for="media">Inserisci il media:</label>
         <input type="text" name="media" id="media">

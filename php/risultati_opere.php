@@ -1,7 +1,6 @@
 <?php
-    include_once 'connessione.php'; // Include la connessione al database
-
-    // Recupero dei parametri di ricerca
+    include_once 'connessione.php'; // include il php per la connessione
+    // recupero dei parametri di ricerca
     $titolo = isset($_POST['titolo']) ? $conn->real_escape_string($_POST['titolo']) : '';
     $dataTesto = isset($_POST['dataTesto']) ? $conn->real_escape_string($_POST['dataTesto']) : '';
     $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
@@ -15,10 +14,8 @@
     $accession_number = isset($_POST['accession_number']) ? $conn->real_escape_string($_POST['accession_number']) : '';
     $id_artista = isset($_POST['id_artista']) && $_POST['id_artista'] ? intval($_POST['id_artista']) : null;
     $ruoloartista = isset($_POST['ruoloartista']) ? $conn->real_escape_string($_POST['ruoloartista']) : '';
-
     // costruzione della query 
     $sql = "SELECT * FROM OPERE WHERE 1=1";
-
     if ($titolo !== '') {
         $sql .= " AND titolo LIKE '%$titolo%'";
     }
@@ -58,43 +55,38 @@
     if ($ruoloartista !== '') {
         $sql .= " AND ruoloartista LIKE '%$ruoloartista%'";
     }
-
     //esecuzione della query
-    $result = $conn->query($sql);
-
-    if ($result === false) {
+    $risultato = $conn->query($sql);
+    if ($risultato === false) {
         echo "Errore nella query: " . $conn->error;
-    } elseif ($result->num_rows > 0) {
+    } elseif ($risultato->num_rows > 0) {
         echo "<h2>Risultati della ricerca:</h2>";
         echo "<table>";
         echo "<tr><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
-
-        while ($row = $result->fetch_assoc()) {
+        while ($riga = $risultato->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>" . $row['titolo'] . "</td>";
-            echo "<td>" . $row['dataTesto'] . "</td>";
-            echo "<td>" . $row['media'] . "</td>";
-            echo "<td>" . $row['anno'] . "</td>";
-            echo "<td>" . $row['anno_acquisizione'] . "</td>";
-            echo "<td>" . $row['dimensioni'] . "</td>";
-            echo "<td>" . $row['crediti'] . "</td>";
-            echo "<td><a href='" . $row['indirizzo_url'] . "'>" . $row['indirizzo_url'] . "</a></td>";
-            echo "<td><a href='" . $row['thumbnailUrl'] . "'>" . $row['thumbnailUrl'] . "</a></td>";
-            echo "<td>" . $row['thumbnailCopyright'] . "</td>";
-            echo "<td>" . $row['accession_number'] . "</td>";
-            echo "<td>" . $row['id_artista'] . "</td>";
-            echo "<td>" . $row['ruoloartista'] . "</td>";
+            echo "<td>" . $riga['titolo'] . "</td>";
+            echo "<td>" . $riga['dataTesto'] . "</td>";
+            echo "<td>" . $riga['media'] . "</td>";
+            echo "<td>" . $riga['anno'] . "</td>";
+            echo "<td>" . $riga['anno_acquisizione'] . "</td>";
+            echo "<td>" . $riga['dimensioni'] . "</td>";
+            echo "<td>" . $riga['crediti'] . "</td>";
+            echo "<td><a href='" . $riga['indirizzo_url'] . "'>" . $riga['indirizzo_url'] . "</a></td>";
+            echo "<td><a href='" . $riga['thumbnailUrl'] . "'>" . $riga['thumbnailUrl'] . "</a></td>";
+            echo "<td>" . $riga['thumbnailCopyright'] . "</td>";
+            echo "<td>" . $riga['accession_number'] . "</td>";
+            echo "<td>" . $riga['id_artista'] . "</td>";
+            echo "<td>" . $riga['ruoloartista'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
         echo "<p>Nessuna opera trovata.</p>";
     }
-
-    // Chiudi la connessione al database
+    // chiudiamo la connessione al database
     $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -106,13 +98,8 @@
             max-width: 1200px;
         }
     </style>
-    <script>
-        function redirectTo(page) {
-            location.href = page;
-        }
-    </script>
 </head>
 <body>
-    <button type="button" onclick="redirectTo('index.html')">Pagina iniziale</button>
+    <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
 </body>
 </html>

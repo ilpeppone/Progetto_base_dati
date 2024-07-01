@@ -1,19 +1,7 @@
 <?php
-        include_once 'connessione.php';
-
-        // Recupero dei parametri di ricerca
-        $id = isset($_GET['id']) && $_GET['id'] !== '' ? intval($_GET['id']) : null;
-        $nome = isset($_GET['nome']) ? $conn->real_escape_string($_GET['nome']) : '';
-        $genere = isset($_GET['genere']) ? $conn->real_escape_string($_GET['genere']) : '';
-        $luogo_nascita = isset($_GET['luogo_nascita']) ? $conn->real_escape_string($_GET['luogo_nascita']) : '';
-        $luogo_morte = isset($_GET['luogo_morte']) ? $conn->real_escape_string($_GET['luogo_morte']) : '';
-        $anno_nascita = isset($_GET['anno_nascita']) && $_GET['anno_nascita'] !== '' ? intval($_GET['anno_nascita']) : null;
-        $anno_morte = isset($_GET['anno_morte']) && $_GET['anno_morte'] !== ''? intval($_GET['anno_morte']) : null;
-        $indirizzo_url = isset($_GET['indirizzo_url']) ? $conn->real_escape_string($_GET['indirizzo_url']) : '';
-
+        include_once 'connessione.php'; //includiamo il php per la connessione al database 
         $sql = "SELECT * FROM ARTISTI WHERE 1=1";
-
-        // Verifica se tutte le variabili di ricerca sono nulle
+        // verifichiamo se le variabili sono nulle 
         if ($id === null &&
             $nome === '' &&
             $genere === '' &&
@@ -22,11 +10,10 @@
             $anno_nascita === null &&
             $anno_morte === null &&
             $indirizzo_url === '') {
-            // Nessun parametro specificato: restituisce tutte le colonne
+            //se lo sono restituiamo tutte le colonne
             $sql = "SELECT * FROM ARTISTI";
-
         } else {
-            // Aggiungi le condizioni solo se ci sono parametri di ricerca specificati
+            // se invece abbiamo specificato dei parametri procediamo ad aggiungere condizioni alla query
             if ($id !== null) {
                 $sql .= " AND id = $id";
             }
@@ -52,59 +39,41 @@
                 $sql .= " AND indirizzo_url LIKE '%$indirizzo_url%'";
             }
         }
-
-        // Esegui la query
-        $result = $conn->query($sql);
+        //eseguiamo la query
+        $risultato = $conn->query($sql);
         // debug query echo "Query SQL: " . $sql . "<br>";
-        if ($result === false) {
-            echo "Errore nella query: " . $conn->error;
-        } elseif ($result->num_rows > 0) {
             echo "<h2>Risultati della ricerca:</h2>";
             echo "<table>";
             echo "<tr><th>ID</th><th>Nome</th><th>Genere</th><th>Anno di Nascita</th><th>Anno di Morte</th><th>Luogo di Nascita</th><th>Luogo di Morte</th><th>URL</th></tr>";
-            while ($row = $result->fetch_assoc()) {
+            while ($riga = $risultato->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row['id'] . "</td>";
-                echo "<td>" . $row['nome'] . "</td>";
-                echo "<td>" . $row['genere'] . "</td>";
-                echo "<td>" . $row['anno_nascita'] . "</td>";
-                echo "<td>" . $row['anno_morte'] . "</td>";
-                echo "<td>" . $row['luogo_nascita'] . "</td>";
-                echo "<td>" . $row['luogo_morte'] . "</td>";
-                echo "<td><a href='" . $row['indirizzo_url'] . "'>" . $row['indirizzo_url'] . "</a></td>";
+                echo "<td>" . $riga['id'] . "</td>";
+                echo "<td>" . $riga['nome'] . "</td>";
+                echo "<td>" . $riga['genere'] . "</td>";
+                echo "<td>" . $riga['anno_nascita'] . "</td>";
+                echo "<td>" . $riga['anno_morte'] . "</td>";
+                echo "<td>" . $riga['luogo_nascita'] . "</td>";
+                echo "<td>" . $riga['luogo_morte'] . "</td>";
+                echo "<td><a href='" . $riga['indirizzo_url'] . "'>" . $riga['indirizzo_url'] . "</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
-        } else {
-            echo "<p>Nessun risultato trovato.</p>";
-        }
-
-        // Chiudi la connessione al database
+        //chiudiamo la connessione al database
         $conn->close();
         ?>
-
 <!DOCTYPE html>
 <html>
     <head>
-        
-        <meta charset="utf-8">
-		        
+        <meta charset="utf-8">     
 		<title>Risultati artisti</title>
-		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-
 		<style>
 			body {
 				max-width: 1200px;
 			}
 		</style>
-        <script>
-            function redirectTo(page) {
-                location.href = page;
-            }
-        </script>
     </head>
     <body>
-        <button type="button" onclick="redirectTo('index.html')">Pagina iniziale</button>
+        <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
     </body>
 </html>
