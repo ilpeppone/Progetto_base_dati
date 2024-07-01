@@ -46,16 +46,8 @@ if ($statistica == 'opere_anno') {
         echo "<p>Nessuna opera trovata per l'artista con ID $artista_id.</p>";
     }
 } elseif ($statistica == 'opere_media') {
-    // Recupero dei parametri di ricerca
     $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
-
-    // Query per trovare il numero di opere per il media specificato
-    $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE 1=1";
-
-    if (!empty($media)) {
-        $sql .= " AND media LIKE '%$media%'";
-    }
-
+    $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE media LIKE '%$media%'";
     $result = $conn->query($sql);
 
     if ($result === false) {
@@ -70,11 +62,11 @@ if ($statistica == 'opere_anno') {
 } elseif ($statistica == 'opere_acquisizioni') {
     $anno_inizio = isset($_POST['anno_inizio']) ? intval($_POST['anno_inizio']) : 0;
     $anno_fine = isset($_POST['anno_fine']) ? intval($_POST['anno_fine']) : 0;
-    
+
     if ($anno_inizio > 0 && $anno_fine > 0) {
-        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE anno_acquisizione >= $anno_inizio AND anno_acquisizione <= $anno_fine";
+        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE anno_acquisizione BETWEEN $anno_inizio AND $anno_fine";
         $result = $conn->query($sql);
-        
+
         if ($result === false) {
             echo "Errore nella query: " . $conn->error;
         } elseif ($result->num_rows > 0) {
@@ -85,10 +77,36 @@ if ($statistica == 'opere_anno') {
             echo "<p>Nessuna opera acquisita tra gli anni $anno_inizio e $anno_fine.</p>";
         }
     }
+} elseif ($statistica == 'nazione_artisti_vivi') {
+    // statistica per trovare la nazione con più artisti in vita
+    $sql = "SELECT luogo_nascita, COUNT(*) AS num_artisti_vivi
+            FROM ARTISTI
+            WHERE luogo_nascita IS NOT NULL AND anno_morte IS NULL
+            GROUP BY luogo_nascita
+            ORDER BY num_artisti_vivi DESC
+            LIMIT 1";
+    
+    $result = $conn->query($sql);
+
+    if ($result === false) {
+        echo "Errore nella query: " . $conn->error;
+    } elseif ($result->num_rows > 0) {
+        echo "<h2>Risultati della ricerca:</h2>";
+        echo "<table>";
+        echo "<tr><th>Nazione di Nascita</th><th>Numero di Artisti Ancora in Vita</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row['luogo_nascita'] . "</td>";
+            echo "<td>" . $row['num_artisti_vivi'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>Nessuna nazione trovata con artisti ancora in vita.</p>";
+    }
 } else {
     echo "<p>Statistica non valida.</p>";
-}
-
+} 
 $conn->close();
 ?>
 

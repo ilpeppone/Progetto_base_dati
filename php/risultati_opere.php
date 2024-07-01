@@ -2,19 +2,19 @@
     include_once 'connessione.php'; // Include la connessione al database
 
     // Recupero dei parametri di ricerca
-    $titolo = isset($_GET['titolo']) ? $conn->real_escape_string($_GET['titolo']) : '';
-    $dataTesto = isset($_GET['dataTesto']) ? $conn->real_escape_string($_GET['dataTesto']) : '';
-    $media = isset($_GET['media']) ? $conn->real_escape_string($_GET['media']) : '';
-    $anno = isset($_GET['anno'])&& $_GET['anno'] ? intval($_GET['anno']) : null;
-    $anno_acquisizione = isset($_GET['anno_acquisizione']) && $_GET['anno_acquisizione'] ? intval($_GET['anno_acquisizione']) : null;
-    $dimensioni = isset($_GET['dimensioni']) ? $conn->real_escape_string($_GET['dimensioni']) : '';
-    $crediti = isset($_GET['crediti']) ? $conn->real_escape_string($_GET['crediti']) : '';
-    $indirizzo_url = isset($_GET['indirizzo_url']) ? $conn->real_escape_string($_GET['indirizzo_url']) : '';
-    $thumbnailUrl = isset($_GET['thumbnailUrl']) ? $conn->real_escape_string($_GET['thumbnailUrl']) : '';
-    $thumbnailCopyright = isset($_GET['thumbnailCopyright']) ? $conn->real_escape_string($_GET['thumbnailCopyright']) : '';
-    $accession_number = isset($_GET['accession_number']) ? $conn->real_escape_string($_GET['accession_number']) : '';
-    $id_artista = isset($_GET['id_artista']) && $_GET['anno']? intval($_GET['id_artista']) : null;
-    $ruoloartista = isset($_GET['ruoloartista']) ? $conn->real_escape_string($_GET['ruoloartista']) : '';
+    $titolo = isset($_POST['titolo']) ? $conn->real_escape_string($_POST['titolo']) : '';
+    $dataTesto = isset($_POST['dataTesto']) ? $conn->real_escape_string($_POST['dataTesto']) : '';
+    $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
+    $anno = isset($_POST['anno']) && $_POST['anno'] ? intval($_POST['anno']) : null;
+    $anno_acquisizione = isset($_POST['anno_acquisizione']) && $_POST['anno_acquisizione'] ? intval($_POST['anno_acquisizione']) : null;
+    $dimensioni = isset($_POST['dimensioni']) ? $conn->real_escape_string($_POST['dimensioni']) : '';
+    $crediti = isset($_POST['crediti']) ? $conn->real_escape_string($_POST['crediti']) : '';
+    $indirizzo_url = isset($_POST['indirizzo_url']) ? $conn->real_escape_string($_POST['indirizzo_url']) : '';
+    $thumbnailUrl = isset($_POST['thumbnailUrl']) ? $conn->real_escape_string($_POST['thumbnailUrl']) : '';
+    $thumbnailCopyright = isset($_POST['thumbnailCopyright']) ? $conn->real_escape_string($_POST['thumbnailCopyright']) : '';
+    $accession_number = isset($_POST['accession_number']) ? $conn->real_escape_string($_POST['accession_number']) : '';
+    $id_artista = isset($_POST['id_artista']) && $_POST['id_artista'] ? intval($_POST['id_artista']) : null;
+    $ruoloartista = isset($_POST['ruoloartista']) ? $conn->real_escape_string($_POST['ruoloartista']) : '';
 
     // costruzione della query 
     $sql = "SELECT * FROM OPERE WHERE 1=1";
