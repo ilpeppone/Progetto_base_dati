@@ -19,57 +19,44 @@
     // recupera il nome dell'artista dalla form
     $nome_artista = $conn->real_escape_string($_POST['nome_artista']);
 
-    // query per trovare l'ID dell'artista
-    $sql_artista = "SELECT id FROM ARTISTI WHERE nome LIKE '%$nome_artista%'";
-    $risultato_artista = $conn->query($sql_artista);
-
-    if ($risultato_artista === false || $risultato_artista->num_rows == 0) {
-        echo "<p>Artista non trovato.</p>";
-    } else {
-        $riga_artista = $risultato_artista->fetch_assoc();
-        $id_artista = $riga_artista['id'];
-
-        // 1uery per recuperare le opere dell'artista utilizzando la join con REALIZZA
-        $sql_opere = "SELECT o.*
-                      FROM OPERE o
-                      JOIN REALIZZA r ON o.id = r.id_opera AND o.accession_number = r.accession_number_opera
-                      WHERE r.id_artista = $id_artista
-                      ORDER BY o.media, o.anno";
-
-        $risultato_opere = $conn->query($sql_opere);
-
-        if ($risultato_opere === false) {
-            echo "<p>Errore nella query: " . $conn->error . "</p>";
-        } elseif ($risultato_opere->num_rows > 0) {
-            echo "<h2>Opere di $nome_artista:</h2>";
-            echo "<table>";
-            echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Indirizzo URL</th></tr>";
-
-            while ($riga = $risultato_opere->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $riga['id'] . "</td>";
-                echo "<td>" . $riga['titolo'] . "</td>";
-                echo "<td>" . $riga['dataTesto'] . "</td>";
-                echo "<td>" . $riga['media'] . "</td>";
-                echo "<td>" . $riga['anno'] . "</td>";
-                echo "<td>" . $riga['anno_acquisizione'] . "</td>";
-                echo "<td>" . $riga['dimensioni'] . "</td>";
-                echo "<td>" . $riga['inscription'] . "</td>";
-                echo "<td>" . $riga['thumbnailCopyright'] . "</td>";
-                echo "<td><a href='" . $riga['thumbnailUrl'] . "'>" . $riga['thumbnailUrl'] . "</a></td>";
-                echo "<td>" . $riga['accession_number'] . "</td>";
-                echo "<td><a href='" . $riga['indirizzo_url'] . "'>" . $riga['indirizzo_url'] . "</a></td>";
-                echo "</tr>";
-            }
-
-            echo "</table>";
-        } else {
-            echo "<p>Nessuna opera trovata per l'artista $nome_artista.</p>";
+    $sql_opere = "
+        SELECT o.*
+        FROM OPERE o
+        JOIN REALIZZA r ON o.id = r.id_opera AND o.accession_number = r.accession_number_opera
+        WHERE r.id_artista = (SELECT id FROM ARTISTI WHERE nome LIKE '%$nome_artista%')
+        ORDER BY o.media, o.anno
+    ";
+    
+    $risultato_opere = $conn->query($sql_opere);
+    
+    if ($risultato_opere === false) {
+        echo "Errore nella query: " . $conn->error;
+    } elseif ($risultato_opere->num_rows > 0) {
+        echo "<h2>Opere di $nome_artista:</h2>";
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Indirizzo URL</th></tr>";
+    
+        while ($riga = $risultato_opere->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $riga['id'] . "</td>";
+            echo "<td>" . $riga['titolo'] . "</td>";
+            echo "<td>" . $riga['dataTesto'] . "</td>";
+            echo "<td>" . $riga['media'] . "</td>";
+            echo "<td>" . $riga['anno'] . "</td>";
+            echo "<td>" . $riga['anno_acquisizione'] . "</td>";
+            echo "<td>" . $riga['dimensioni'] . "</td>";
+            echo "<td>" . $riga['inscription'] . "</td>";
+            echo "<td>" . $riga['thumbnailCopyright'] . "</td>";
+            echo "<td><a href='" . $riga['thumbnailUrl'] . "'>" . $riga['thumbnailUrl'] . "</a></td>";
+            echo "<td>" . $riga['accession_number'] . "</td>";
+            echo "<td><a href='" . $riga['indirizzo_url'] . "'>" . $riga['indirizzo_url'] . "</a></td>";
+            echo "</tr>";
         }
+    
+        echo "</table>";
+    } else {
+        echo "<p>Nessuna opera trovata per l'artista $nome_artista.</p>";
     }
-
-    // chiudiamo la connessione al database
-    $conn->close();
     ?>
 </body>
 </html>
