@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Risultati Opere</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
+</body>
+</html>
 <?php
     include_once 'connessione.php'; // include il php per la connessione
     // recupero dei parametri di ricerca
@@ -94,19 +110,3 @@
     // chiudiamo la connessione al database
     $conn->close();
 ?>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <title>Risultati Opere</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <style>
-        body {
-            max-width: 1200px;
-        }
-    </style>
-</head>
-<body>
-    <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
-</body>
-</html>

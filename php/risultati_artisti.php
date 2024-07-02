@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">     
+		<title>Risultati artisti</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+		<style>
+			body {
+				max-width: 1200px;
+			}
+		</style>
+    </head>
+    <body>
+        <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
+    </body>
+</html>
 <?php
         include_once 'connessione.php'; //includiamo il php per la connessione al database 
         // recuperiamo i parametri
@@ -66,19 +82,3 @@
         //chiudiamo la connessione al database
         $conn->close();
         ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">     
-		<title>Risultati artisti</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-		<style>
-			body {
-				max-width: 1200px;
-			}
-		</style>
-    </head>
-    <body>
-        <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
-    </body>
-</html>
