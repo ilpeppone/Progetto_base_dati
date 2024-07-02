@@ -7,37 +7,44 @@
     <style>
         body {
             max-width: 1200px;
-            margin: auto;
         }
     </style>
 </head>
 <body>
-    <button type="button" onclick="location.href = 'index.html' ">Pagina iniziale</button>
-</body>
-</html>
-<?php
-    include_once 'connessione.php'; // includiamo la connessione al database
-    // recuperiamo i parametri di ricerca
+    <button type="button" onclick="location.href = 'index.html'">Pagina iniziale</button>
+
+    <?php
+    include_once 'connessione.php';
+
+    // recupera il nome dell'artista dalla form
     $nome_artista = $conn->real_escape_string($_POST['nome_artista']);
-    // query per trovare l'artista
+
+    // query per trovare l'ID dell'artista
     $sql_artista = "SELECT id FROM ARTISTI WHERE nome LIKE '%$nome_artista%'";
     $risultato_artista = $conn->query($sql_artista);
+
     if ($risultato_artista === false || $risultato_artista->num_rows == 0) {
-        echo "Artista non trovato.";
+        echo "<p>Artista non trovato.</p>";
     } else {
         $riga_artista = $risultato_artista->fetch_assoc();
         $id_artista = $riga_artista['id'];
-        // query per trovare le opere per l'artista
-        $sql_opere = "SELECT * FROM OPERE WHERE id_artista = $id_artista ORDER BY media, anno";
+
+        // 1uery per recuperare le opere dell'artista utilizzando la join con REALIZZA
+        $sql_opere = "SELECT o.*
+                      FROM OPERE o
+                      JOIN REALIZZA r ON o.id = r.id_opera AND o.accession_number = r.accession_number_opera
+                      WHERE r.id_artista = $id_artista
+                      ORDER BY o.media, o.anno";
+
         $risultato_opere = $conn->query($sql_opere);
-        // se non ci sono opere stampo "nessun opera per l'artista", altrimenti se ce n'è almeno una stampo la tabella
+
         if ($risultato_opere === false) {
-            echo "Errore nella query: " . $conn->error;
+            echo "<p>Errore nella query: " . $conn->error . "</p>";
         } elseif ($risultato_opere->num_rows > 0) {
             echo "<h2>Opere di $nome_artista:</h2>";
             echo "<table>";
-            echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Ruolo Artista</th><th>Indirizzo URL</th></tr>";
-            // fetch_assoc() estrae ogni riga dei risultati della query come un array associativo, che può poi essere utilizzato per visualizzare i dati
+            echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Inscription</th><th>Thumbnail Copyright</th><th>Thumbnail URL</th><th>Accession Number</th><th>Indirizzo URL</th></tr>";
+
             while ($riga = $risultato_opere->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $riga['id'] . "</td>";
@@ -51,16 +58,18 @@
                 echo "<td>" . $riga['thumbnailCopyright'] . "</td>";
                 echo "<td><a href='" . $riga['thumbnailUrl'] . "'>" . $riga['thumbnailUrl'] . "</a></td>";
                 echo "<td>" . $riga['accession_number'] . "</td>";
-                echo "<td>" . $riga['ruoloartista'] . "</td>";
                 echo "<td><a href='" . $riga['indirizzo_url'] . "'>" . $riga['indirizzo_url'] . "</a></td>";
                 echo "</tr>";
             }
+
             echo "</table>";
         } else {
             echo "<p>Nessuna opera trovata per l'artista $nome_artista.</p>";
         }
     }
-    //chiudiamo la connessione al database
-    $conn->close();
-?>
 
+    // chiudiamo la connessione al database
+    $conn->close();
+    ?>
+</body>
+</html>

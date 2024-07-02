@@ -13,8 +13,8 @@
 <body>
     <h1>Numero di opere per artista</h1>
     <form action="statistiche.php" method="POST">
-        <label for="artista_id">ID Artista:</label>
-        <input type="number" id="artista_id" name="artista_id" required>
+        <label for="artista_id">Nome artista:</label>
+        <input type="text" id="nome_artista" name="nome_artista" required>
         <input type="hidden" name="statistica" value="opere_artista">
         <button type="submit">Calcola</button>
     </form>

@@ -31,7 +31,7 @@ df_lavori['id'] = pd.to_numeric(df_lavori['id'],  errors='coerce').astype(pd.Int
 df_lavori['accession_number'] = df_lavori['accession_number'].replace('', pd.NA).astype(pd.StringDtype())
 df_lavori= df_lavori.drop(columns=['artist'])#artist lo tolgo perchè il nome è già presente nel csv degli artisti
 df_lavori['artistRole'] = df_lavori['artistRole'].replace('', pd.NA).astype(pd.StringDtype())
-df_lavori['artistId'] = pd.to_numeric(df_lavori['artistId'],  errors='coerce').astype(pd.Int32Dtype())
+df_lavori['artistId'] = df_lavori['artistId'].replace('', pd.NA).astype(pd.StringDtype())
 df_lavori['title'] = df_lavori['title'].replace('', pd.NA).astype(pd.StringDtype())
 df_lavori['dateText'] = df_lavori['dateText'].replace('', pd.NA).astype(pd.StringDtype())#lo lascio perchè ci sono informazioni aggiuntive
 df_lavori['medium'] = df_lavori['medium'].replace('', pd.NA).astype(pd.StringDtype())
@@ -47,6 +47,24 @@ df_lavori['thumbnailUrl'] = df_lavori['thumbnailUrl'].replace('', pd.NA).astype(
 df_lavori['url'] = df_lavori['url'].replace('', pd.NA).astype(pd.StringDtype())
 
 print(df_lavori.dtypes)#visualizziamo se i dati sono stati convertiti nel tipo che abbiamo indicato
+
+
+df_realizza = pd.DataFrame({
+    'artistId': df_lavori['artistId'],  # colonna degli id degli artisti dalle opere
+    'artworkId': df_lavori['id'],       # colonna degli id delle opere
+    'accession_number': df_lavori['accession_number'],  # colonna degli accession number delle opere
+    'artistRole': df_lavori['artistRole']  # colonna dei ruoli degli artisti nelle opere
+})
+
+df_lavori = df_lavori.drop(columns=['artistId', 'artistRole'])
+df_realizza= df_realizza.drop_duplicates()
+max_lengths = df_realizza.apply(lambda col: col.astype(str).str.len().max())
+#verifico la dimensione massima di ogni colonna delle opere per stringa
+print(max_lengths)
+df_realizza.to_csv('/home/peppe/Progetto_base_dati/realizza.csv', index=False)
+
+
+
 
 print(df_lavori.shape)#verifichiamo quanti valori ci sono
 df_lavori=df_lavori.drop_duplicates() #eliminazione di eventuali righe duplicate

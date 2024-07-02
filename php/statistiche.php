@@ -29,18 +29,40 @@ if ($statistica == 'opere_anno') {
         echo "<p>Nessun artista trovato per la nazione $nazione.</p>";
     }
 } elseif ($statistica == 'opere_artista') {
-    $artista_id = isset($_POST['artista_id']) ? intval($_POST['artista_id']) : 0;
-    $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE id_artista = $artista_id";
-    $risultato = $conn->query($sql);
+    $nome_artista = isset($_POST['nome_artista']) ? $conn->real_escape_string($_POST['nome_artista']) : '';
 
-    if ($risultato === false) {
-        echo "Errore nella query: " . $conn->error;
-    } elseif ($risultato->num_rows > 0) {
-        $riga = $risultato->fetch_assoc();
-        echo "<h2>Risultati della ricerca:</h2>";
-        echo "<p>Numero di opere realizzate dall'artista con ID $artista_id: " . $riga['numero_opere'] . "</p>";
+    // Trova l'ID dell'artista basato sul nome
+    $sql_id_artista = "SELECT A.id 
+                       FROM ARTISTI A
+                       WHERE A.nome LIKE '%$nome_artista%'";
+    $risultato_id_artista = $conn->query($sql_id_artista);
+
+    if ($risultato_id_artista === false) {
+        echo "Errore nella ricerca dell'artista: " . $conn->error;
+    } elseif ($risultato_id_artista->num_rows > 0) {
+        $riga_id_artista = $risultato_id_artista->fetch_assoc();
+        $artista_id = $riga_id_artista['id'];
+
+        // Query per contare le opere realizzate dall'artista usando due join
+        $sql = "SELECT COUNT(*) AS numero_opere 
+                FROM OPERE O
+                JOIN REALIZZA R1 ON O.id = R1.id_opera AND O.accession_number = R1.accession_number_opera
+                JOIN ARTISTI A ON R1.id_artista = A.id
+                WHERE A.id = $artista_id";
+
+        $risultato = $conn->query($sql);
+
+        if ($risultato === false) {
+            echo "Errore nella query: " . $conn->error;
+        } elseif ($risultato->num_rows > 0) {
+            $riga = $risultato->fetch_assoc();
+            echo "<h2>Risultati della ricerca:</h2>";
+            echo "<p>Numero di opere realizzate dall'artista $nome_artista: " . $riga['numero_opere'] . "</p>";
+        } else {
+            echo "<p>Nessuna opera trovata per l'artista $nome_artista.</p>";
+        }
     } else {
-        echo "<p>Nessuna opera trovata per l'artista con ID $artista_id.</p>";
+        echo "<p>Nessun artista trovato con il nome '$nome_artista'.</p>";
     }
 } elseif ($statistica == 'opere_media') {
     $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
@@ -59,7 +81,7 @@ if ($statistica == 'opere_anno') {
     $anno_inizio = isset($_POST['anno_inizio']) ? intval($_POST['anno_inizio']) : 0;
     $anno_fine = isset($_POST['anno_fine']) ? intval($_POST['anno_fine']) : 0;
     if ($anno_inizio > 0 && $anno_fine > 0) {
-        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE anno_acquisizione BETWEEN $anno_inizio AND $anno_fine";
+        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE anno_acquisizione IS NOT NULL AND anno_acquisizione BETWEEN $anno_inizio AND $anno_fine";
         $risultato = $conn->query($sql);
         if ($risultato === false) {
             echo "Errore nella query: " . $conn->error;

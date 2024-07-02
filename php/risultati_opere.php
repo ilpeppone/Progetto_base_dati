@@ -31,8 +31,6 @@
     $thumbnailUrl = isset($_POST['thumbnailUrl']) ? $conn->real_escape_string($_POST['thumbnailUrl']) : '';
     $thumbnailCopyright = isset($_POST['thumbnailCopyright']) ? $conn->real_escape_string($_POST['thumbnailCopyright']) : '';
     $accession_number = isset($_POST['accession_number']) ? $conn->real_escape_string($_POST['accession_number']) : '';
-    $id_artista = isset($_POST['id_artista']) && $_POST['id_artista'] ? intval($_POST['id_artista']) : null;
-    $ruoloartista = isset($_POST['ruoloartista']) ? $conn->real_escape_string($_POST['ruoloartista']) : '';
     // costruzione della query 
     $sql = "SELECT * FROM OPERE WHERE 1=1";
     if ($id !== null) {
@@ -71,12 +69,6 @@
     if ($accession_number !== '') {
         $sql .= " AND accession_number LIKE '%$accession_number%'";
     }
-    if ($id_artista !== null) {
-        $sql .= " AND id_artista = $id_artista";
-    }
-    if ($ruoloartista !== '') {
-        $sql .= " AND ruoloartista LIKE '%$ruoloartista%'";
-    }
     //esecuzione della query
     $risultato = $conn->query($sql);
     if ($risultato === false) {
@@ -84,7 +76,7 @@
     } elseif ($risultato->num_rows > 0) {
         echo "<h2>Risultati della ricerca:</h2>";
         echo "<table>";
-        echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th><th>ID Artista</th><th>Ruolo Artista</th></tr>";
+        echo "<tr><th>ID</th><th>Titolo</th><th>Data</th><th>Media</th><th>Anno</th><th>Anno di Acquisizione</th><th>Dimensioni</th><th>Crediti</th><th>Indirizzo URL</th><th>Thumbnail URL</th><th>Thumbnail Copyright</th><th>Accession Number</th></tr>";
         while ($riga = $risultato->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $riga['id'] . "</td>";
@@ -99,8 +91,6 @@
             echo "<td><a href='" . $riga['thumbnailUrl'] . "'>" . $riga['thumbnailUrl'] . "</a></td>";
             echo "<td>" . $riga['thumbnailCopyright'] . "</td>";
             echo "<td>" . $riga['accession_number'] . "</td>";
-            echo "<td>" . $riga['id_artista'] . "</td>";
-            echo "<td>" . $riga['ruoloartista'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
