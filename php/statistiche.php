@@ -18,7 +18,7 @@ if ($statistica == 'opere_anno') {
     $nazione = $conn->real_escape_string($_POST['nazione']);
     $sql = "SELECT COUNT(DISTINCT id) AS numero_artisti
             FROM ARTISTI
-            WHERE luogo_nascita = '$nazione' OR luogo_morte = '$nazione'";
+            WHERE luogo_nascita LIKE '%$nazione' OR luogo_morte LIKE '%$nazione'"; ////CORREZIONE
     $risultato = $conn->query($sql);
 
     if ($risultato === false) {
@@ -83,7 +83,7 @@ if ($statistica == 'opere_anno') {
             echo "<p>Nessuna opera acquisita tra gli anni $anno_inizio e $anno_fine.</p>";
         }
     }
-} elseif ($statistica == 'nazioni_artisti_vivi') {
+} elseif ($statistica == 'luogo_nascita_artisti_vivi') {
     // statistica per trovare la nazione con più artisti in vita
     $sql = "SELECT luogo_nascita, COUNT(*) AS num_artisti_vivi
             FROM ARTISTI
@@ -96,7 +96,7 @@ if ($statistica == 'opere_anno') {
     } elseif ($risultato->num_rows > 0) {
         echo "<h2>Risultati della ricerca:</h2>";
         echo "<table>";
-        echo "<tr><th>Nazioni di Nascita</th><th>Numero di Artisti Ancora in Vita</th></tr>";
+        echo "<tr><th>Luogo di Nascita</th><th>Numero di Artisti Ancora in Vita</th></tr>";
         while ($riga = $risultato->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $riga['luogo_nascita'] . "</td>";
