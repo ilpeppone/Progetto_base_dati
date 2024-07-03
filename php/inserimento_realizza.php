@@ -18,6 +18,7 @@
     $csv_file_realizza = "/home/peppe/Progetto_base_dati/realizza.csv";
 
     // disabilitiamo il controllo delle chiavi esterne per evitare errori di riferimento durante l'inserimento
+    //perchè alcune opere già presenti nel database potrebbero non avere un id artista
     $conn->query("SET FOREIGN_KEY_CHECKS = 0");
 
     // Apriamo il file CSV per REALIZZA

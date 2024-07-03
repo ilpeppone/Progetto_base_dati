@@ -15,8 +15,7 @@
         include_once 'connessione.php';
         // percorso del file CSV dei lavori
         $csv_file_lavori = "/home/peppe/Progetto_base_dati/lavori_puliti.csv"; 
-        // disabilitiamo il controllo delle chiavi esterne
-        $conn->query("SET FOREIGN_KEY_CHECKS = 0");
+        
         // apriamo il file CSV dei lavori
         if (($handle = fopen($csv_file_lavori, "r")) !== FALSE) {
             fgetcsv($handle); // leggiamo e scartiamo la prima riga (header)
@@ -63,8 +62,7 @@
         } else {
             echo "Errore nell'apertura del file CSV dei lavori";
         }
-        // riabilitiamo il controllo delle chiavi esterne
-        $conn->query("SET FOREIGN_KEY_CHECKS = 1");
+        
         // chiudiamo la connessione al database
         $conn->close();
     ?>

@@ -71,7 +71,7 @@ if ($statistica == 'opere_anno') {
     $anno_inizio = isset($_POST['anno_inizio']) ? intval($_POST['anno_inizio']) : 0;
     $anno_fine = isset($_POST['anno_fine']) ? intval($_POST['anno_fine']) : 0;
     if ($anno_inizio > 0 && $anno_fine > 0  && $anno_inizio < $anno_fine) {
-        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE anno_acquisizione IS NOT NULL AND anno_acquisizione BETWEEN $anno_inizio AND $anno_fine";
+        $sql = "SELECT COUNT(*) AS numero_opere FROM OPERE WHERE  anno_acquisizione BETWEEN $anno_inizio AND $anno_fine";
         $risultato = $conn->query($sql);
         if ($risultato === false) {
             echo "Errore nella query: " . $conn->error;
