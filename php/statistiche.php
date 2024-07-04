@@ -18,7 +18,7 @@ if ($statistica == 'opere_anno') {
     $nazione = $conn->real_escape_string($_POST['nazione']);
     $sql = "SELECT COUNT(DISTINCT id) AS numero_artisti
             FROM ARTISTI
-            WHERE luogo_nascita LIKE '%$nazione' OR luogo_morte LIKE '%$nazione'"; ////CORREZIONE
+            WHERE luogo_nascita LIKE '%$nazione%' OR luogo_morte LIKE '%$nazione%'"; ////CORREZIONE
     $risultato = $conn->query($sql);
 
     if ($risultato === false) {
