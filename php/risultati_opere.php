@@ -19,7 +19,7 @@
     // recupero dei parametri di ricerca
     $id = isset($_POST['id']) && $_POST['id'] ? $_POST['id'] : null;
     // isset($_POST['id']) verifica se $_POST['id'] è impostato, cioè se esiste e non è null.
-    // $_POST['id'] è valutato come vero se il suo valore non è vuoto, null o zero.
+    // $_POST['id'] è valutato come vero se il suo valore non è vuoto, null.
     $titolo = isset($_POST['titolo']) ? $conn->real_escape_string($_POST['titolo']) : '';
     $dataTesto = isset($_POST['dataTesto']) ? $conn->real_escape_string($_POST['dataTesto']) : '';
     $media = isset($_POST['media']) ? $conn->real_escape_string($_POST['media']) : '';
