@@ -22,6 +22,5 @@ Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interroga
 
 # Il nostro progetto in breve
 
-Relazione:  
-
+Breve relazione che descrive i punti chiave: 
 [Apri il PDF](Relazione_progetto.pdf)
