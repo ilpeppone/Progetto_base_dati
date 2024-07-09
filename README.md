@@ -22,5 +22,5 @@ Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interroga
 
 # Il nostro progetto in breve
 
-Breve relazione che descrive i punti chiave: 
+Breve relazione che descrive come ci siamo approcciati per rappresentare la base di dati, la pulizia effettuata con pandas, e le query utilizzate: 
 [Apri il PDF](Relazione_progetto.pdf)
