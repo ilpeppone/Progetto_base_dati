@@ -20,9 +20,8 @@ artisti;
 
 Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interrogazioni di vostra invenzione.  
 
-Interpretazione Diagramma ER  
+# Breve relazione che descrive i punti chiave
 
-![Descrizione dell'immagine](progetto_diagrammaER.drawio.png)
+Puoi trovare ulteriori informazioni nel seguente documento:  
 
-Interpretazione Diagramma ER per la pulizia  
-![Descrizione dell'immagine](progetto_diagrammaER_pulito.drawio.png)
+[Apri il PDF](Relazione_progetto.pdf)
