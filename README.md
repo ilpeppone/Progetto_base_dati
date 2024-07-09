@@ -20,8 +20,8 @@ artisti;
 
 Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interrogazioni di vostra invenzione.  
 
-# Breve relazione che descrive i punti chiave
+# Il nostro progetto in breve
 
-Puoi trovare ulteriori informazioni nel seguente documento:  
+Relazione:  
 
 [Apri il PDF](Relazione_progetto.pdf)
