@@ -18,8 +18,11 @@ artisti;
 4.2 numero di artisti nati e/o morti in una determinata nazione;
 4.3 numero di opere per artista;
 
-Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interrogazioni di vostra invenzione. 
-////////////////////////////////////////////////////////////////////////////////
-Diagramma ER 
+Non obbligatorio è l’ampliamento del punto 4 con qualche (da 1 a 3) interrogazioni di vostra invenzione.  
+
+Interpretazione Diagramma ER  
+
 ![Descrizione dell'immagine](progetto_diagrammaER.drawio.png)
 
+Interpretazione Diagramma ER per la pulizia  
+![Descrizione dell'immagine](progetto_diagrammaER_pulito.drawio.png)
